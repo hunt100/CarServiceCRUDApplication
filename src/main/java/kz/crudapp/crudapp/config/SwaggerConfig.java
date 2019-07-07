@@ -20,7 +20,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("kz.crudapp.crudapp"))
-                .paths(regex("/.*"))
+                .paths(regex("/api/.*"))
                 .build()
                 .apiInfo(metaInfo());
     }
