@@ -41,4 +41,9 @@ public class OwnerRestController {
     public void deleteOwner(@PathVariable("id") Long id) {
         ownerService.deleteOwnerById(id);
     }
+
+    @GetMapping(value = "/search/byAddress/{address}")
+    public List<Owner> findAllOwnersWithStartingAddress(@PathVariable("address")String address) {
+        return ownerService.findOwnersAddressStartWith(address);
+    }
 }

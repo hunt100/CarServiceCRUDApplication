@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -66,4 +67,8 @@ public class CarService {
         return cars;
     }
 
+
+    public List<Car> getCarsEqualHigherByMileage(Long mileage) {
+        return getAllCars().stream().filter(c -> c.getMileage() >= mileage).collect(Collectors.toList());
+    }
 }

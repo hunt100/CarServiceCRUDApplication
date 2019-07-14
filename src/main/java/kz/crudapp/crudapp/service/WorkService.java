@@ -1,6 +1,5 @@
 package kz.crudapp.crudapp.service;
 
-import kz.crudapp.crudapp.entity.Car;
 import kz.crudapp.crudapp.entity.Work;
 import kz.crudapp.crudapp.repository.WorkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ public class WorkService {
     public Work findWorkById(Long id) {
         Optional<Work> foundedWork = workRepository.findById(id);
         if (!foundedWork.isPresent()) {
-            throw new IllegalArgumentException("Wrong work id - " + id );
+            throw new IllegalArgumentException("Wrong work id - " + id);
         }
         return foundedWork.get();
     }
@@ -38,8 +37,7 @@ public class WorkService {
         if (foundedOptWork.isPresent()) {
             work.setId(id);
             workRepository.save(work);
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Invalid work id" + work.getId());
         }
     }

@@ -1,7 +1,6 @@
 package kz.crudapp.crudapp.repository;
 
 import kz.crudapp.crudapp.entity.Car;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

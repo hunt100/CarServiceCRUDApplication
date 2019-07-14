@@ -52,4 +52,8 @@ public class CarRestController {
         return carService.getCarsByModel(model);
     }
 
+    @GetMapping(value = "/filter/byMileage/{mileage}")
+    public List<Car> findCarsEqualOrHigherByMileage(@PathVariable("mileage")Long mileage) {
+        return carService.getCarsEqualHigherByMileage(mileage);
+    }
 }
