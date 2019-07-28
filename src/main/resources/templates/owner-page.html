@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Owner Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="fragments/navigation.html :: nav"></div>
+
+<section class="mt-2">
+    <div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+               <th>
+                   Id:
+               </th>
+                <th>
+                    FirstName:
+                </th>
+                <th>
+                    LastName:
+                </th>
+                <th>
+                    Patronymic:
+                </th>
+                <th>
+                    Telephone:
+                </th>
+                <th>
+                    Address:
+                </th>
+                <th>
+                    Edit:
+                </th>
+                <th>
+                    Delete?
+                </th>
+            </tr>
+        </thead>
+        <tbody th:each="owner : ${owners}">
+        <tr>
+            <td th:utext="${owner.getId()}"></td>
+            <td th:utext="${owner.getFirstName()}"></td>
+            <td th:utext="${owner.getLastName()}"></td>
+            <td th:utext="${owner.getPatronymic()}"></td>
+            <td th:utext="${owner.getTelephone()}"></td>
+            <td th:utext="${owner.getAddress()}"></td>
+            <td><a class="btn btn-outline-warning" th:href="@{owner/edit/{id}(id=${owner.getId()})}">Edit</a></td>
+            <td><a class="btn btn-outline-danger" th:href="@{owner/delete/{id}(id=${owner.getId()})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+        <div>
+            <h1 class="display-4">Need more owners?</h1>
+            <form class="mt-2" action="/owner/addOwner" th:action="@{/owner/addOwner}" method="post" th:object="${newOwner}">
+                <div class="form-group">
+                    <label for="firstname">First name:</label>
+                    <input class="form-control" type="text" placeholder="Ivan" th:field="*{firstName}" id="firstname" th:errorclass="${#fields.hasErrors('firstName')}? 'is-invalid'" />
+                    <div class="invalid-feedback" th:errors="*{firstName}">
+                        Please, enter something.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last name:</label>
+                    <input class="form-control" type="text" placeholder="Ivanov" th:field="*{lastName}" id="lastname" th:errorclass="${#fields.hasErrors('lastName')}? 'is-invalid'"/>
+                    <div class="invalid-feedback" th:errors="*{lastName}">
+                        Please, enter something.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="patronymic">Patronymic:</label>
+                    <input class="form-control" type="text" placeholder="Ivanovich" th:field="*{patronymic}" id="patronymic" th:errorclass="${#fields.hasErrors('patronymic')}? 'is-invalid'"/>
+                    <div class="invalid-feedback" th:errors="*{patronymic}">
+                        Please, enter <something class=""></something>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="telephone">Telephone:</label>
+                    <input class="form-control" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="707-123-45-67" th:field="*{telephone}" id="telephone"
+                           th:errorclass="${#fields.hasErrors('telephone')}? 'is-invalid'"/>
+                    <div class="invalid-feedback" th:errors="*{telephone}">
+                        Please, enter something.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input class="form-control" type="text" placeholder="Almaty, street" th:field="*{address}" id="address" th:errorclass="${#fields.hasErrors('address')}? 'is-invalid'"/>
+                    <div class="invalid-feedback" th:errors="*{address}">
+                        Please, enter something.
+                    </div>
+                </div>
+                <button class="btn btn-outline-primary" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

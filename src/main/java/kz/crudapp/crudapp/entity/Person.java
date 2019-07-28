@@ -1,17 +1,20 @@
 package kz.crudapp.crudapp.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @MappedSuperclass
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
+    @NotBlank(message = "name is mandatory")
     private String firstName;
 
+    @NotBlank(message = "last name is mandatory")
     private String lastName;
 
+    @NotBlank(message = "patronymic is mandatory")
     private String patronymic;
 
     public Person() {

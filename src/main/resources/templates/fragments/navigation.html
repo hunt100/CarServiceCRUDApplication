@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" xmlns:th="http://www.thymeleaf.org">
+    <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}"> Ref to Swagger</a>
+            <ul class="navbar-nav">
+                <li class="navbar-item" th:classappend="${#httpServletRequest.getRequestURI() == '/owner' ? 'active':''}">
+                    <a class="nav-link" th:href="@{/owner}">Owner</a>
+                </li>
+                <li class="navbar-item">
+                    <a class="nav-link disabled" th:href="@{/cars}">Cars</a>
+                </li>
+                <li class="navbar-item">
+                    <a class="nav-link disabled" th:href="@{/worker}">Masters</a>
+                </li>
+                <li class="navbar-item">
+                    <a class="nav-link disabled" th:href="@{/works}">Works</a>
+                </li>
+            </ul>
+
+    </div>
+</nav>
