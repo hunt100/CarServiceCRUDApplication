@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -22,16 +23,21 @@ public class OwnerController {
     public String getAllOwners(Model model) {
         List<Owner> owners = ownerService.findAllOwner();
         model.addAttribute("owners", owners);
-        model.addAttribute("newOwner", new Owner());
+        if(!model.asMap().containsKey("newOwner"))
+            model.addAttribute("newOwner", new Owner());
+
         return "owner-page";
     }
 
     @PostMapping("/addOwner")
-    public String addNewOwner(Model model, @ModelAttribute("newOwner") @Valid Owner newOwner, Errors errors) {
-        if (errors.hasErrors()) {
+    public String addNewOwner(Model model, @ModelAttribute("newOwner") @Valid Owner newOwner, BindingResult result,
+                              RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
             System.err.println("Error appeared");
             model.addAttribute("owners", ownerService.findAllOwner());
-            return "owner-page";
+            redirectAttributes.addFlashAttribute("newOwner", newOwner);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.newOwner", result);
+            return "redirect:/owner";
         }
         if(newOwner == null) {
             System.err.println("empty owner form detected");

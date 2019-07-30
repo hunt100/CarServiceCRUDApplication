@@ -47,8 +47,8 @@
             <td th:utext="${owner.getPatronymic()}"></td>
             <td th:utext="${owner.getTelephone()}"></td>
             <td th:utext="${owner.getAddress()}"></td>
-            <td><a class="btn btn-outline-warning" th:href="@{owner/edit/{id}(id=${owner.getId()})}">Edit</a></td>
-            <td><a class="btn btn-outline-danger" th:href="@{owner/delete/{id}(id=${owner.getId()})}">Delete</a></td>
+            <td><a class="btn btn-outline-warning" th:href="@{/owner/edit/{id}(id=${owner.getId()})}">Edit</a></td>
+            <td><a class="btn btn-outline-danger" th:href="@{/owner/delete/{id}(id=${owner.getId()})}">Delete</a></td>
         </tr>
         </tbody>
     </table>
