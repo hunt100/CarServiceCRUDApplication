@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Worker Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/5572124dac.js"></script>
+</head>
+<body>
+<div th:insert="fragments/navigation.html :: nav"></div>
+<div class="container mt-1">
+    <div class="row">
+        <div class="col-xl-1">
+           <p class="text-muted">Id:</p>
+        </div>
+        <div class="col-xl-3">
+            <p class="text-muted">Job:</p>
+        </div>
+        <div class="col-xl-3">
+            <p class="text-muted">Car info:</p>
+        </div>
+        <div class="col-xl-3">
+            <p class="text-muted">Master info:</p>
+        </div>
+        <div class="col-xl-2"></div>
+    </div>
+    <div class="row border-bottom" th:each="work : ${works}">
+        <div class="col-xl-1">
+            <p class="text-primary" th:text="${work.getId()}">Id:</p>
+        </div>
+        <div class="col-xl-3">
+            <p th:text="${work.getWorkDone()}">Job:</p>
+        </div>
+        <div class="col-xl-3">
+            <p th:text="${work.getCar().getModel()} + ' ' + ${work.getCar().getYearOfIssue()} + '( ' + ${work.getCar().getYearOfIssue()} + ' )'"></p>
+            <p th:text="'Owner: ' + ${work.getCar().getOwner().getLastName()} + ' ' + ${work.getCar().getOwner().getFirstName()} + ' ' + ${work.getCar().getOwner().getPatronymic()}"></p>
+        </div>
+        <div class="col-xl-3">
+            <p th:text="'Master: ' + ${work.getWorker().getLastName()} + ' ' + ${work.getWorker().getFirstName()} + ' ' + ${work.getWorker().getPatronymic()}"></p>
+        </div>
+        <div class="col-xl-2">
+            <a class="btn btn-outline-info btn-sm mt-2" th:href="@{/works/edit/{id}(id=${work.getId()})}"><i class="fas fa-edit"></i><span>Edit</span></a>
+            <a class="btn btn-outline-danger btn-sm mt-2" th:href="@{/works/delete/{id}(id=${work.getId()})}"><i class="fas fa-trash"></i><span>Delete</span></a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h1 class="display-4">Add new work:</h1>
+    <form th:action="@{/works/}" th:object="${newWork}" method="post">
+        <div class="form-group">
+            <label for="job">Job done:</label>
+            <input class="form-control" type="text" id="job" th:field="*{workDone}" placeholder="Done something" />
+        </div>
+        <div class="from-group">
+            <label for="car">Car:</label>
+            <select id="car" class="form-control" th:field="*{car}">
+                <option th:each="c : ${cars}" th:value="${c.id}" th:text="${c.model} + ' ' + ${c.yearOfIssue}"></option>
+            </select>
+        </div>
+        <div class="from-group">
+        <label for="worker">Workers:</label>
+        <select id="worker" class="form-control" th:field="*{worker}">
+            <option th:each="w : ${workers}" th:value="${w.id}" th:text="${w.lastName} + ' ' + ${w.firstName}"></option>
+        </select>
+    </div>
+        <button type="submit" class="btn btn-outline-success mt-2">Add Work</button>
+    </form>
+</div>
+</body>
+</html>

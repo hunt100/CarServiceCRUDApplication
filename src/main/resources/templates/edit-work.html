@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Work edit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="fragments/navigation.html :: nav"></div>
+<div class="container">
+    <h1 class="display-4">Update work:</h1>
+    <form th:action="@{/works/}" th:object="${work}" method="post">
+        <div class="form-group">
+            <label for="job">Job done:</label>
+            <input class="form-control" type="text" id="job" th:field="*{workDone}" th:value="*{workDone}" />
+        </div>
+        <div class="from-group">
+            <label for="car">Car:</label>
+            <select id="car" class="form-control" th:field="*{car}">
+                <option th:each="c : ${cars}" th:value="${c.id}" th:text="${c.model} + ' ' + ${c.yearOfIssue}" th:selected="${c.id == work.getCar().getId()}"></option>
+            </select>
+        </div>
+        <div class="from-group">
+            <label for="worker">Workers:</label>
+            <select id="worker" class="form-control" th:field="*{worker}">
+                <option th:each="w : ${workers}" th:value="${w.id}" th:text="${w.lastName} + ' ' + ${w.firstName}" th:selected="${w.id == work.getWorker().getId()}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-outline-success mt-2">Edit Work</button>
+    </form>
+</div>
+</body>
+</html>

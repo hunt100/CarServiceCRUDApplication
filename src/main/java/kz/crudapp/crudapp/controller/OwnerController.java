@@ -3,6 +3,8 @@ package kz.crudapp.crudapp.controller;
 import kz.crudapp.crudapp.entity.Owner;
 import kz.crudapp.crudapp.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -20,7 +23,17 @@ public class OwnerController {
     private OwnerService ownerService;
 
     @GetMapping
-    public String getAllOwners(Model model) {
+    public String getAllOwners(Model model, Authentication authentication) {
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isAdmin = false;
+        for(GrantedAuthority grantedAuthority : authorities) {
+            if(grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
+                isAdmin = true;
+                break;
+            }
+        }
+        model.addAttribute("isAdmin", isAdmin);
+
         List<Owner> owners = ownerService.findAllOwner();
         model.addAttribute("owners", owners);
         if(!model.asMap().containsKey("newOwner"))

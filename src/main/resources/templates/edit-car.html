@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car edit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="fragments/navigation.html :: nav"></div>
+<div class="container">
+        <h1 class="display-3">Add new car</h1>
+        <form th:action="@{/cars/update/{id}(id=${car.getId()})}" th:object="${car}" method="post">
+            <div class="form-group">
+                <label for="car-model">Car model:</label>
+                <input class="form-control"  type="text" id="car-model" placeholder="Audi tt" th:field="*{model}" th:value="*{model}"/>
+            </div>
+            <div class="form-group">
+                <label for="year">Year of issue:</label>
+                <input class="form-control" type="text" id="year" placeholder="2002" th:field="*{yearOfIssue}" th:value="*{model}"/>
+            </div>
+            <div class="form-group">
+                <label for="mileage">Mileage:</label>
+                <input class="form-control" type="text" id="mileage" placeholder="200" th:field="*{mileage}" th:value="*{model}"/>
+            </div>
+            <div class="from-group">
+                <label for="owner">Owner:</label>
+                <select id="owner" class="form-control" th:field="*{owner}">
+                    <option th:each="own : ${owners}" th:value="${own.id}" th:text="${own.lastName} + ' ' + ${own.firstName}" th:selected="${own.getId() == car.getOwner().getId()}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-outline-info mt-2">Update car</button>
+        </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Worker Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="fragments/navigation.html :: nav"></div>
+<section class="mt-2">
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>
+                    Id:
+                </th>
+                <th>
+                    FirstName:
+                </th>
+                <th>
+                    LastName:
+                </th>
+                <th>
+                    Patronymic:
+                </th>
+                <th>
+                    Edit:
+                </th>
+                <th>
+                    Delete?
+                </th>
+            </tr>
+            </thead>
+            <tbody th:each="worker : ${workers}">
+            <tr>
+                <td th:utext="${worker.getId()}"></td>
+                <td th:utext="${worker.getFirstName()}"></td>
+                <td th:utext="${worker.getLastName()}"></td>
+                <td th:utext="${worker.getPatronymic()}"></td>
+                <td><a class="btn btn-outline-warning" th:href="@{/worker/edit/{id}(id=${worker.getId()})}">Edit</a></td>
+                <td><a class="btn btn-outline-danger" th:href="@{/worker/delete/{id}(id=${worker.getId()})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <h1 class="display-4">I need new workers.</h1>
+            <form class="mt-2" action="/worker/addWorker" th:action="@{/worker/addWorker}" method="post" th:object="${newWorker}">
+                <div class="form-group">
+                    <label for="firstname">First name:</label>
+                    <input class="form-control" type="text" placeholder="Ivan" th:field="*{firstName}" id="firstname" th:errorclass="${#fields.hasErrors('firstName')}? 'is-invalid'" />
+                    <div class="invalid-feedback" th:errors="*{firstName}">
+                        Please, enter something.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last name:</label>
+                    <input class="form-control" type="text" placeholder="Ivanov" th:field="*{lastName}" id="lastname" th:errorclass="${#fields.hasErrors('lastName')}? 'is-invalid'"/>
+                    <div class="invalid-feedback" th:errors="*{lastName}">
+                        Please, enter something.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="patronymic">Patronymic:</label>
+                    <input class="form-control" type="text" placeholder="Ivanovich" th:field="*{patronymic}" id="patronymic" th:errorclass="${#fields.hasErrors('patronymic')}? 'is-invalid'"/>
+                    <div class="invalid-feedback" th:errors="*{patronymic}">
+                        Please, enter <something class=""></something>
+                    </div>
+                </div>
+
+                <button class="btn btn-outline-primary" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

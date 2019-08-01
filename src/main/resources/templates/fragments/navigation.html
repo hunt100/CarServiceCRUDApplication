@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" xmlns:th="http://www.thymeleaf.org">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <div class="container-fluid">
             <a class="navbar-brand" th:href="@{/swagger-ui.html}"> Ref to Swagger</a>
             <ul class="navbar-nav">
@@ -8,11 +8,11 @@
                 <li class="navbar-item" th:classappend="${#httpServletRequest.getRequestURI() == '/cars' ? 'active':''}">
                     <a class="nav-link " th:href="@{/cars}">Cars</a>
                 </li>
-                <li class="navbar-item">
-                    <a class="nav-link disabled" th:href="@{/workers}">Masters</a>
+                <li class="navbar-item" th:classappend="${#httpServletRequest.getRequestURI() == '/worker' ? 'active':''}">
+                    <a class="nav-link" th:href="@{/worker}">Masters</a>
                 </li>
                 <li class="navbar-item">
-                    <a class="nav-link disabled" th:href="@{/works}">Works</a>
+                    <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/works' ? 'active' : ''}" th:href="@{/works}">Works</a>
                 </li>
                 <li class="navbar-item">
                     <a th:href="@{/logout}">Logout</a>

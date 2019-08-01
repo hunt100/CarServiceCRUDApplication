@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Owner Page</title>
@@ -7,6 +7,22 @@
 </head>
 <body>
 <div th:insert="fragments/navigation.html :: nav"></div>
+
+Logged user: <span sec:authentication="name">Bob</span>
+Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+<div sec:authorize="isAuthenticated()">
+    role_admin text
+</div>
+<div sec:authorize="!isAuthenticated()">
+    admin text
+</div>
+<div sec:authorize="hasRole('USER')">
+    sample text text
+</div>
+
+<div th:if="${isAdmin}">
+    <a href="/robots.txt">Admin panel ?</a>
+</div>
 
 <section class="mt-2">
     <div class="container">

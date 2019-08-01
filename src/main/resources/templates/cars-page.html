@@ -24,6 +24,8 @@
                         <h5 class="card-title" th:text="${car.getModel()} + ' ' + ${car.getYearOfIssue()} + ' (' + ${car.getMileage()} + ' km)'">Card title</h5>
                         <p class="card-text" th:text="'Owner: ' + ${car.getOwner().getLastName()} + ' ' + ${car.getOwner().getFirstName()} + ' ' + ${car.getOwner().getPatronymic()}">Owner info</p>
                         <p class="card-text" th:text="'Live in: ' + ${car.getOwner().getAddress()} + '. Tel: ' + ${car.getOwner().getTelephone()}">More owner info</p>
+                        <a class="btn btn-outline-info mx-left" th:href="@{cars/edit/{id}(id=${car.getId()})}">Edit</a>
+                        <a class="btn btn-outline-danger mx-left" th:href="@{cars/delete/{id}(id=${car.getId()})}">Delete</a>
                     </div>
                     <div class="card-footer">
                         <ul class="list-group" th:each="work : ${car.getWork()}">
@@ -37,6 +39,32 @@
             </div>
         </div>
 
+        <div class="mt-2">
+            <h1 class="display-3">Add new car</h1>
+            <form th:action="@{/cars/addCar}" th:object="${newCar}" method="post">
+                <div class="form-group">
+                    <label for="car-model">Car model:</label>
+                    <input class="form-control"  type="text" id="car-model" placeholder="Audi tt" th:field="*{model}"/>
+                </div>
+                <div class="form-group">
+                    <label for="year">Year of issue:</label>
+                    <input class="form-control" type="text" id="year" placeholder="2002" th:field="*{yearOfIssue}" />
+                </div>
+                <div class="form-group">
+                    <label for="mileage">Mileage:</label>
+                    <input class="form-control" type="text" id="mileage" placeholder="200" th:field="*{mileage}" />
+                </div>
+                <div class="from-group">
+                    <label for="owner">Owner:</label>
+                    <select id="owner" class="form-control" th:field="*{owner}">
+                        <option th:each="own : ${owners}" th:value="${own.id}" th:text="${own.lastName} + ' ' + ${own.firstName}"></option>
+                    </select>
+                </div>
+                <small class="text-muted">Works by default will be empty</small>
+                <br>
+                <button type="submit" class="btn btn-success">Add car</button>
+            </form>
+        </div>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
