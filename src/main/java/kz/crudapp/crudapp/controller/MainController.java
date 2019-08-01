@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -30,12 +30,31 @@ public class MainController {
     }
 
     @PostMapping("/registration")
-    public String addUser(@ModelAttribute("myUser") @Valid MyUser myUser, BindingResult result) {
+    public String addUser(@ModelAttribute("myUser") @Valid MyUser myUser, BindingResult result, Model model) {
         if (result.hasErrors()) {
             System.err.println("error appeared");
             return "/registration";
         }
-        myUserDetailService.regUser(myUser);
-        return "redirect:/login";
+        String serviceErrorMessage = myUserDetailService.regUser(myUser);
+        if (serviceErrorMessage == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("myError", serviceErrorMessage);
+        return "/registration";
+    }
+
+    @GetMapping("/activate/{code}")
+    public String activate(Model model, @PathVariable String code) {
+        boolean isActivated = myUserDetailService.activateUser(code);
+
+        if (isActivated) {
+            model.addAttribute("myMessage", "User successfully activated");
+        }
+        else {
+            model.addAttribute("myMessage", "Activation code is not found");
+        }
+
+        return "login";
+
     }
 }
